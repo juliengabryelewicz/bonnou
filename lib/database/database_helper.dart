@@ -45,13 +45,12 @@ class DatabaseHelper {
   }
 
   static Future<int> update(int id, RssModel rss) async {
-    print(id);
     return await _db?.update(_tableName, rss.toJson(),
         where: 'id = ?', whereArgs: [rss.id]) ?? 1;
   }
 
   static Future<List<Map<String, dynamic>>?> query() async {
-    return await _db?.query(_tableName);
+    return await _db?.query(_tableName, orderBy: "title ASC");
   }
 
   static Future<void> delete(RssModel rss) async {

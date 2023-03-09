@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 TextStyle textStyleBlack(double size) {
-  return GoogleFonts.arimaMadurai(
+  return GoogleFonts.abel(
     textStyle: TextStyle(
       fontSize: size,
       color: Colors.black,
@@ -11,7 +11,7 @@ TextStyle textStyleBlack(double size) {
 }
 
 TextStyle textStyleBoldGrey(double size) {
-  return GoogleFonts.arimaMadurai(
+  return GoogleFonts.abel(
     textStyle: TextStyle(
       fontSize: size,
       color: Colors.grey,
@@ -21,7 +21,7 @@ TextStyle textStyleBoldGrey(double size) {
 }
 
 TextStyle textStyleBoldBlack(double size) {
-  return GoogleFonts.arimaMadurai(
+  return GoogleFonts.abel(
     textStyle: TextStyle(
       fontSize: size,
       color: Colors.black,
@@ -31,7 +31,7 @@ TextStyle textStyleBoldBlack(double size) {
 }
 
 TextStyle textStyleBoldBlue(double size) {
-  return GoogleFonts.arimaMadurai(
+  return GoogleFonts.abel(
     textStyle: TextStyle(
       fontSize: size,
       color: Colors.blue,

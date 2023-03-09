@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bonnou/utils/constants.dart';
+import 'package:bonnou/utils/date_format.dart';
 import 'package:webfeed_plus/webfeed_plus.dart';
 
 class NewsTile extends StatelessWidget {
@@ -28,7 +29,7 @@ class NewsTile extends StatelessWidget {
                   softWrap: true,
                 ),
                 Text(
-                  news.pubDate.toString(),
+                  rewriteDate(news.pubDate.toString()),
                   style: textStyleBlack(14),
                   softWrap: true,
                 ),

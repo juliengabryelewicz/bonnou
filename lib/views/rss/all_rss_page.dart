@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bonnou/utils/constants.dart';
 import 'package:bonnou/widgets/all_rss/app_bar.dart';
 import 'package:bonnou/widgets/all_rss/display_rss.dart';
+import 'package:bonnou/widgets/all_rss/count_rss.dart';
 import 'package:bonnou/widgets/common/drawer.dart';
 
 class AllRssPage extends StatelessWidget {
@@ -26,6 +27,7 @@ class AllRssPage extends StatelessWidget {
                 },
               ),
               verticalSpace(30),
+              CountRss(),
               verticalSpace(20),
               DisplayRss(),
             ],

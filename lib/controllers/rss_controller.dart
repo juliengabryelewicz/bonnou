@@ -4,18 +4,17 @@ import 'package:get/get.dart';
 import 'package:bonnou/database/database_helper.dart';
 import 'package:bonnou/models/rss_model.dart';
 import 'package:bonnou/utils/classifier.dart';
+import 'package:bonnou/utils/sort_rss.dart';
 import 'package:webfeed_plus/webfeed_plus.dart';
 import 'package:http/http.dart';
 import 'package:get_storage/get_storage.dart';
 
 class RssController extends GetxController {
   var rssList = <RssModel>[].obs;
-  int get rssLength => rssList.length;
   var rssById = <RssModel>[].obs;
   var goodNewsList = <RssItem>[].obs;
   var badNewsList = <RssItem>[].obs;
   final _classifier = Classifier();
-  final String _stopwords = GetStorage().read("stopwords") ?? "";
 
   @override
   void onInit() {
@@ -52,7 +51,8 @@ class RssController extends GetxController {
   getAllNews() async {
     List<RssItem> rssGoodItemList = <RssItem>[];
     List<RssItem> rssBadItemList = <RssItem>[];
-    List<String> listStopWords = _stopwords.toLowerCase().split(",");
+    String _stopwords = GetStorage().read("stopwords") ?? "";
+    List<String>? listStopWords = _stopwords.trim() != "" ? _stopwords.trim().toLowerCase().split(",") : null;
     for (var i=0; i<rssList.length; i++) {
       var res = await get(Uri.parse(rssList[i].link!));
       if (res.statusCode == 200) {
@@ -61,7 +61,7 @@ class RssController extends GetxController {
           List<double> scores_title = _classifier.classify(item.title ?? "");
           List<double> scores_description = _classifier.classify(item.description ?? "");
 
-          if (listStopWords.any((element) => item.title!.toLowerCase().contains(element.trim()))) {
+          if (listStopWords != null && listStopWords.any((element) => item.title!.toLowerCase().contains(element.trim()))) {
             rssBadItemList.add(item);
           } else if(scores_title[0] >= 0.5 && scores_description[0] >= 0.5){
             rssGoodItemList.add(item);
@@ -71,17 +71,10 @@ class RssController extends GetxController {
         }
       }
     }
-    rssGoodItemList.sort((a,b) {
-      var aPubDate = a.pubDate;
-      var bPubDate = b.pubDate;
-      return bPubDate!.compareTo(aPubDate!);
-    });
 
-    rssBadItemList.sort((a,b) {
-      var aPubDate = a.pubDate;
-      var bPubDate = b.pubDate;
-      return bPubDate!.compareTo(aPubDate!);
-    });
+    sortByDate(rssGoodItemList);
+    sortByDate(rssBadItemList);
+
     goodNewsList.value = rssGoodItemList;
     badNewsList.value = rssBadItemList;
   }

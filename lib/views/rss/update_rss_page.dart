@@ -79,7 +79,6 @@ class UpdateRssPage extends StatelessWidget {
     final String title = _titleController.text;
     final String link = _linkController.text;
     final int id = rss.id!;
-    print(id);
     _rssController.updateRss(id, title, link).then((value) {
       Get.snackbar(
         'Lien RSS modifié',
